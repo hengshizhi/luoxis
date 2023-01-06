@@ -1,60 +1,7 @@
-# go-cqhttpSDK
+# luoxis
 ### ——依赖于go-cqhttp，需要先正确安装并运行，使用HTTP协议，使你更方便的请求go-cqhttpAPI
-### 使用方法：
-1. 到[go-cqhttpSDK](https://github.com/hengshizhi/go-cqhttpSDK)下载go_cqhttpsdk.py并引入或者pip install go_cqhttpsdk (https://pypi.org/project/go_cqhttpsdk/)  推荐使用前者的方法来下载此包
-2. 实例化sdk方法 `sdk = go_cqhttpsdk.sdk`
-3. 设置API的url地址 `sdk.url = 'http://127.0.0.1:5700'`
-4. 开始使用
-5. 例子：
-````
-import go_cqhttpsdk as sdk
-sdk = sdk.sdk()
-sdk.url = "http://127.0.0.1:5700"
-sdk.发送私聊消息(3192145045,'','你好')
-sdk.send_private_msg(3192145045,'','hello shizhi')
-````
-CQ码生成例子:
-````
-import cq as cq
-cqs = cq.cqc()
-print(cqs.图片('aa.jpg',0,0,'http://aaa.aa'))
-````
-###HTTP接收信息的例子:
-````
-import go_cqhttpserver as server
-
-a = server.apiserver()
-a.main_f = 'a.main()'  #设置每次服务器被访问时运行的函数
-a.communication_f = 'a.communication()'  #设置通讯用函数，用来把收到的信息发出去
-a.c_port = 8980  #端口
-a.c_listen = 100  #最大连接数
-a.go()  #启动服务器
-#a.data是实时获取到的消息
->>>
-````
-运行后启动示例的客户端，配置参考底部
-````
-import socket
-# 创建客户端套接字
-sk = socket.socket()           
-# 尝试连接服务器
-sk.connect(('127.0.0.1',8980))
-while True:
-    # 信息发送
-    # 信息接收
-    ret = sk.recv(1024)
-    # 结束会话
-    if ret == b'bye':
-        sk.send(b'bye')
-        break
-    # 信息打印
-    print(ret.decode('utf-8'))
-# 关闭客户端套接字
-sk.close()   
-
->>>
-返回json数据
-````
+洛溪斯QQ机器人框架，基于go-cqhttp和go-cqhttpsdk的框架，代码简洁
+文档：http://luoxistar.df100.ltd/blog/index.php/luoxis%e6%a1%86%e6%9e%b6%e4%b8%8b%e8%bd%bd/
 感谢：requests，go-cqhttp，tencent
 
 小提示:配置文件config.yml内容
