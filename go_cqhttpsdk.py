@@ -4,7 +4,7 @@ class sdk:
     def get(self,终结点,myParams):
         url = self.url+终结点  #拼接终结点
         res = requests.get(url=url, params=myParams)  #发送给API请求
-        print('GET:',url)
+        print('GET:',res.url)
         return(res.text)  #返回请求的内容
 
     ## 发送私聊消息

@@ -59,7 +59,7 @@ class luoxis:
     data = '' #收到的消息
     c_state = 0  #socket开启状态
     UseLegacy = False #是否使用旧版的luoxis,同时也将支持旧版的中文变量
-    EnableChineseVariables = False #启动新版中文变量,当UseLegacy==True时不可使用英文变量,UseLegacy==None时中英混用
+    EnableChineseVariables = False #启动新版中文变量,当UseLegacy==True时不可使用英文变量,EnableChineseVariables==None时中英混用
     SourceGroup = None #初始化
     MessageContent = None #初始化
     MessageSender = None #初始化
@@ -169,15 +169,15 @@ class luoxis:
                 print('消息类型:',self.MessageType)
             except:
                 pass
-            if(self.MessageContent != None):
-                self.main()
-            elif(self.UseLegacy == True):
-                self.main(self,发送的群,收到的消息,消息类型,消息来源,信息发送者)
-            self.SourceGroup = None
-            self.MessageContent = None
-            self.MessageSender = None
-            self.MessageType = None
-            self.Source = None
+        if(self.MessageContent != None):
+            self.main()
+        elif(self.UseLegacy == True):
+            self.main(self,发送的群,收到的消息,消息类型,消息来源,信息发送者)
+        self.SourceGroup = None
+        self.MessageContent = None
+        self.MessageSender = None
+        self.MessageType = None
+        self.Source = None
         return 'OK'
     def sendMessage(self,QQID:int,消息内容:str): #发送消息，自动判读消息类型
         if(self.MessageType == 'private'):
@@ -185,7 +185,7 @@ class luoxis:
         elif(self.MessageType == 'group'):
             sdk.发送群消息(QQID,消息内容)
     def ReplyMessage(self,回复消息内容:str): #应答消息
-        self.sendMessage(self.MessageSender,回复消息内容)
+        self.sendMessage(self.Source,回复消息内容)
     def POCQCodeOne(self:str,CQ码类型:str): #挑出一条消息的第一个CQ码
         self.MessageContent = self.MessageContent.split('[')
         cqdata = str()
