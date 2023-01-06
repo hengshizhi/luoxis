@@ -50,19 +50,6 @@ def 挑出CQ码(消息:str,CQ码类型:str):
     cqdata = '['+cqdata.split(']')[0]+']'
     return cqdata
 
-v = '1.0a3' #版本号
-print('版本:v'+v)
-try:
-    gv = requests.get('http://luoxistar.df100.ltd/blog/wp-content/uploads/2023/01/zuixin.txt').text
-    print(gv)
-    if(v == gv):
-        print('您已是最新版本')
-    else:
-        print('您不是最新版本,请前往[http://luoxistar.df100.ltd/blog/index.php/luoxis%e6%a1%86%e6%9e%b6%e4%b8%8b%e8%bd%bd/]下载最新版本')
-except:
-    print('最新版本号获取失败')
-
-
 class luoxis:
     luoxisN = 'luoxis' #机器人调用命令头
     communication_f = 'luoxis.communication()'
