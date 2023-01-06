@@ -4,6 +4,7 @@ except:
     import os
     os.system('pip3 install pymysql')
     import pymysql
+
 host = 'localhost'  #数据库地址
 port = 3306   #数据库端口
 db = 'mysql_test'  #数据库名
@@ -11,30 +12,30 @@ user = 'root'  #数据库用户名
 password = ''  #数据库密码
 
 # ---- 用pymysql 操作数据库
-def get_connection():
-    conn = pymysql.connect(host=host, port=port, db=db, user=user, password=password)
-    return conn
+# def get_connection():
+#     conn = pymysql.connect(host=host, port=port, db=db, user=user, password=password)
+#     return conn
 
-def sql(sql):
-    db = get_connection()
-    cursor = db.cursor()
-    cursor.execute(sql)
-    db.commit()
-    db.close()
-    return cursor.fetchone()
-    #print(check_it(sql))
+# def sql(sql):
+#     db = get_connection()
+#     cursor = db.cursor()
+#     cursor.execute(sql)
+#     db.commit()
+#     db.close()
+#     return cursor.fetchone()
+#     #print(check_it(sql))
 
-def sqls(sql):
-    data = list()
-    db = get_connection()
-    cursor = db.cursor()
-    cursor.execute(sql)
-    db.commit()
-    db.close()   
-    rest=cursor.fetchall()
-    for i in rest:
-        data.append(i)
-    return data
+# def sqls(sql):
+#     data = list()
+#     db = get_connection()
+#     cursor = db.cursor()
+#     cursor.execute(sql)
+#     db.commit()
+#     db.close()   
+#     rest=cursor.fetchall()
+#     for i in rest:
+#         data.append(i)
+#     return data
 
 class MysqlManager(object):
     """
@@ -213,19 +214,16 @@ class MysqlManager(object):
                 sql = "SELECT {key} FROM {table}".format(key=shou_list, table=table_name)
  
             self.__cursor.execute(sql)
-            self.__connect.commit()
-            if get_one:
-                result = self.__cursor.fetchone()
-            else:
-                result = self.__cursor.fetchall()
-            print(result)
- 
+            result = list()
+            for i in self.__cursor.fetchall():
+                result.append(i)
+                
         except Exception as e:
             print("查询失败：", e)
         else:
             self.Close_DB()
             print("查询成功")
- 
+        return result
     # todo 处理传进来的Value
     def Handle_value(self, value):
         """
@@ -287,8 +285,9 @@ class MysqlManager(object):
             return "<="
  
  
-def increase_data(dbManager):
-    # 0 代表是插入数据，因为插入数据和 其他 查询 修改 更新数据条件不一样
+def 增(dbManager,表名:str,insert_data):
+    '''
+     0 代表是插入数据，因为插入数据和 其他 查询 修改 更新数据条件不一样
     insert_data = [{
         0: [
             {"name": 'GFGF'},
@@ -296,19 +295,20 @@ def increase_data(dbManager):
             {"sex": 1}
         ]
     }]
- 
+    '''
     # 增
-    dbManager.Insert_DB(table_name='user', insert_data=insert_data)
+    return dbManager.Insert_DB(table_name=表名, insert_data=insert_data)
  
  
-def delete_data(dbManager):
+def 删(dbManager,表名:str,WHERE):
     # 删
     # 如果 条件很多 就在字典里加条件就可以，如果只有一条数据，就写一个字典就好
     # 0 没有任何条件
     # 1 是 = 号
     # 2 是 > 号
     # 剩下具体看 Judeg_parameter方法
-    ddd = [{
+    '''
+    WHERE = [{
         1: [{
             "name": 'FFFF',
             "sex": 13
@@ -317,33 +317,36 @@ def delete_data(dbManager):
             "age": 300
         }]
     }]
-    dbManager.Delete(table_name='user', condition=ddd)
+    '''
+    return dbManager.Delete(table_name=表名, condition=WHERE)
  
  
-def 改(dbManager):
+def 改(dbManager,表名,数据,WHERE=None):
     # 改
     # 一个是带处理条件的查询，一个是不带处理条件的查询
     # 0 没有任何条件
     # 1 是 = 号
     # 2 是 > 号
     # 剩下具体看 Judeg_parameter方法
-    fff = [{
+    '''
+    WHERE = [{
         1: [{
             "ID": 10,
             "name": "RRR"
         }]
     }]
-    data = [{
+    数据 = [{
         1: [{
             "name": 'TTT',
             "sex": 6
         }]
     }]
-    dbManager.Update(table_name='user', condition=fff, data=data)
+    '''
+    return dbManager.Update(table_name=表名, condition=WHERE, data=数据)
     # dbManager.Update(table_name='user', data=data)                # 这个是直接修改某个表里面 字段的所有参数
  
  
-def 查(dbManager,表名:str,字段:list,WHERE):
+def 查(dbManager,表名:str,字段:list,WHERE=None):
     """
     condition: 传入None 则没有查询条件， 传入查询条件，则查询传入条件的规则
     get_one: 查询是否查一条 还是查询所有 False 是符合条件的所有东西  True是查符合条件的一条数据
@@ -355,7 +358,7 @@ def 查(dbManager,表名:str,字段:list,WHERE):
         }]
     }]
     """
-    dbManager.Select_DB(table_name=表名, show_ist=字段, condition=WHERE, get_one=True)
+    return dbManager.Select_DB(table_name=表名, show_ist=字段, condition=WHERE, get_one=True)
  
  
 if __name__ == '__main__':
@@ -382,17 +385,12 @@ if __name__ == '__main__':
     
     下面 每个方法 删 改 查 都有写 怎么使用
     '''
- 
+    db = 'mysql_test' #数据库名
+    user = 'root' #用户
+    passwd = '' #密码
     dbManager = MysqlManager(db='mysql_test', user='root', passwd='')
-    # 增
-    # increase_data(dbManager=dbManager)
-    # # 删
-    # delete_data(dbManager=dbManager)
-    # # 改
-    # change_data(dbManager=dbManager)
-    # # 查
-    #check_data(dbManager=dbManager)
-    
+    print(查(dbManager=dbManager,表名='消息记录',字段=['*'],WHERE=[{1:[{'信息发送者':'127'}]}]))
+    print(删(dbManager=dbManager,表名='消息记录',WHERE=[{1:[{'信息发送者':'127'}]}]))
     '''
     PRIMARY KEY AUTO_INCREMENT    这句话的意思是 把这个字段设置成主KEY  并且自增长
     VARCHAR(255)                  字符串类型 长度 255
