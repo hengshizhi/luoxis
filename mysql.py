@@ -5,11 +5,11 @@ except:
     os.system('pip3 install pymysql')
     import pymysql
 
-host = 'localhost'  #数据库地址
-port = 3306   #数据库端口
-db = 'mysql_test'  #数据库名
-user = 'root'  #数据库用户名
-password = ''  #数据库密码
+# host = 'localhost'  #数据库地址
+# port = 3306   #数据库端口
+# db = 'mysql_test'  #数据库名
+# user = 'root'  #数据库用户名
+# password = ''  #数据库密码
 
 # ---- 用pymysql 操作数据库
 # def get_connection():
@@ -385,12 +385,12 @@ if __name__ == '__main__':
     
     下面 每个方法 删 改 查 都有写 怎么使用
     '''
-    db = 'mysql_test' #数据库名
-    user = 'root' #用户
-    passwd = '' #密码
-    dbManager = MysqlManager(db='mysql_test', user='root', passwd='')
-    print(查(dbManager=dbManager,表名='消息记录',字段=['*'],WHERE=[{1:[{'信息发送者':'127'}]}]))
-    print(删(dbManager=dbManager,表名='消息记录',WHERE=[{1:[{'信息发送者':'127'}]}]))
+    # db = 'mysql_test' #数据库名
+    # user = 'root' #用户
+    # passwd = '' #密码
+    # dbManager = MysqlManager(db='mysql_test', user='root', passwd='')
+    # print(查(dbManager=dbManager,表名='消息记录',字段=['*'],WHERE=[{1:[{'信息发送者':'127'}]}]))
+    # print(删(dbManager=dbManager,表名='消息记录',WHERE=[{1:[{'信息发送者':'127'}]}]))
     '''
     PRIMARY KEY AUTO_INCREMENT    这句话的意思是 把这个字段设置成主KEY  并且自增长
     VARCHAR(255)                  字符串类型 长度 255
